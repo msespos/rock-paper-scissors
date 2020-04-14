@@ -15,7 +15,41 @@
                 }
                 return move;
             }
-            console.log(computerPlay());
+            function playRound(playerSelection, computerSelection) {
+                let winState;
+	            playerSelection = playerSelection.toLowerCase();
+                computerSelection = computerSelection.toLowerCase();
+                console.log(playerSelection);
+                console.log(computerSelection);
+                if (playerSelection === computerSelection) {
+                    return "It's a tie!";
+                } else if (playerSelection === "rock" && computerSelection === "scissors") {
+                        winState = "w";
+                } else if (playerSelection === "paper" && computerSelection === "rock") {
+                        winState = "w";
+                } else if (playerSelection === "scissors" && computerSelection === "paper") {
+                        winState = "w";
+                } else if (playerSelection === "scissors" && computerSelection === "rock") {
+                        winState = "l";
+                } else if (playerSelection === "rock" && computerSelection === "paper") {
+                        winState = "l";    
+                } else if (playerSelection === "paper" && computerSelection === "scissors") {
+                        winState = "l";
+                } else {
+                    return "Something went wrong."
+                }
+                console.log(winState);
+                if (winState === "w") {
+                    return "You won; " + playerSelection + " beats " + computerSelection + "!"
+                } else if (winState === "l") {
+                    return "You lost; " + computerSelection + " beats " + playerSelection + "!"
+                } else {
+                    return "A different thing went wrong."
+                }
+            }
+            const playerSelection = 'rock'
+            const computerSelection = computerPlay()
+            console.log(playRound(playerSelection, computerSelection));
         </script>
     </body>
 </html>
