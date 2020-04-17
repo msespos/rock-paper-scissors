@@ -5,10 +5,18 @@
         <button id="rock">Rock</button> 
         <button id="paper">Paper</button> 
         <button id="scissors">Scissors</button>
+        <div id="container"></div>
     </head>
     <body>
         <script>
-            const div = document.createElement('div');
+            const roundResult = document.createElement('div');
+            roundResult.classList.add('roundResult');
+            const finalScore = document.createElement('div');
+            finalScore.classList.add('finalScore');
+            const finalResult = document.createElement('div');
+            finalResult.classList.add('finalResult');
+
+
             const rock = document.querySelector("#rock");
             const paper = document.querySelector("#paper");
             const scissors = document.querySelector("#scissors");
@@ -56,26 +64,35 @@
             function game(playerSelection) {
                 let playerScore = 0;
                 let computerScore = 0;
-                let gameStatus;                       
+                let roundStatus;                       
                 let computerSelection = computerPlay()
-                gameStatus = playRound(playerSelection, computerSelection);
-                if (gameStatus === "w") {
+                roundStatus = playRound(playerSelection, computerSelection);
+                if (roundStatus === "w") {
                     playerScore++;
-                    console.log("You won this round: " + playerSelection + " beats " + computerSelection + "!")
-                } else if (gameStatus === "l") {
+                    roundResult.textContent = "You won this round: " + playerSelection + 
+                            " beats " + computerSelection + "!"
+                    container.appendChild(roundResult)
+                } else if (roundStatus === "l") {
                     computerScore++;
-                    console.log("You lost this round: " + computerSelection + " beats " + playerSelection + "!")
-                } else if (gameStatus === "t") {
-                    console.log("You tied this round!")
+                    roundResult.textContent = "You lost this round: " + computerSelection +
+                            " beats " + playerSelection + "!"
+                    container.appendChild(roundResult)
+                } else if (roundStatus === "t") {
+                    roundResult.textContent = "You tied this round: " + playerSelection +
+                            " and " + computerSelection + " are equal!"
+                    container.appendChild(roundResult)
                     }
-                //    console.log("Score after Round "+ (turn + 1) + ": " + "Player " + playerScore + ", Computer " + computerScore + "!")
-                console.log("Final score: Player " + playerScore + ", Computer " + computerScore + "!")
+                finalScore.textContent = "Final score: Player " + playerScore + ", Computer " + computerScore + "!"
+                container.appendChild(finalScore)
                 if (playerScore > computerScore) {
-                    console.log("You won!")
+                    finalResult.textContent = "You won!"
+                    container.appendChild(finalResult)
                 } else if (computerScore > playerScore) {
-                    console.log("You lost!")
+                    finalResult.textContent = "You lost!"
+                    container.appendChild(finalResult)
                 } else {
-                    console.log("It's a tie!")
+                    finalResult.textContent = "It\s a tie!"
+                    container.appendChild(finalResult)
                 }
             }
             </script>
