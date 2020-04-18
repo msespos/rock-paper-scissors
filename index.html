@@ -2,12 +2,17 @@
 <html>
     <head>
         <title>Rock Paper Scissors</title>
+        <style>
+            div {
+                white-space: pre;
+            }
+        </style>
+    </head>
+    <body>
         <button id="rock">Rock</button> 
         <button id="paper">Paper</button> 
         <button id="scissors">Scissors</button>
         <div id="container"></div>
-    </head>
-    <body>
         <script>
             const roundResults = document.createElement('div');
             roundResults.classList.add('roundResults');
@@ -74,26 +79,26 @@
                     if (roundStatus === "w") {
                         playerScore++;
                         roundResults.append("You won this round: " + playerSelection + 
-                                " beats " + computerSelection + "!");
+                                " beats " + computerSelection + "!\n");
                     } else if (roundStatus === "l") {
                         computerScore++;
                         roundResults.append("You lost this round: " + computerSelection +
-                                " beats " + playerSelection + "!");
+                                " beats " + playerSelection + "!\n");
                     } else if (roundStatus === "t") {
                         roundResults.append("You tied this round: " + playerSelection +
-                                " and " + computerSelection + " are equal!");
+                                " and " + computerSelection + " are equal!\n");
                     }
                     
                     console.log(playerScore);
                     console.log(computerScore);
                     
                     roundResults.append("Current score: Player " + playerScore + ", Computer " +
-                            computerScore + "!");
+                            computerScore + "!\n");
                 }
                 container.appendChild(roundResults);
 
                 finalScore.textContent = "Final score: Player " + playerScore + ", Computer " +
-                            computerScore + "!";
+                            computerScore + "!\n";
                 container.appendChild(finalScore);
 
                 if (playerScore > computerScore) {
