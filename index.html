@@ -9,10 +9,12 @@
         </style>
     </head>
     <body>
+        
         <button id="rock">Rock</button> 
         <button id="paper">Paper</button> 
         <button id="scissors">Scissors</button>
         <div id="container"></div>
+
         <script>
             const roundResults = document.createElement('div');
             roundResults.classList.add('roundResults');
@@ -25,15 +27,27 @@
             const paper = document.querySelector("#paper");
             const scissors = document.querySelector("#scissors");
             let playerSelection;
+            let computerSelection;
+            let playerScore = 0;
+            let computerScore = 0;
 
-            rock.addEventListener('click', () => {                
-                game("rock");
+            rock.addEventListener('click', () => {
+                playerSelection = "rock";
+                computerSelection = computerPlay();
+                roundStatus = playRound(playerSelection, computerSelection);
+                showRoundResults(roundStatus);
             });
             paper.addEventListener('click', () => {
-                game("paper");
+                playerSelection = "paper";
+                computerSelection = computerPlay();
+                roundStatus = playRound(playerSelection, computerSelection);
+                showRoundResults(roundStatus);
             });
             scissors.addEventListener('click', () => {
-                game("scissors");
+                playerSelection = "scissors";
+                computerSelection = computerPlay();
+                roundStatus = playRound(playerSelection, computerSelection);
+                showRoundResults(roundStatus);
             });
 
             function computerPlay() {
@@ -66,50 +80,68 @@
                 }
             }
             
-            function game(playerSelection) {
-                let playerScore = 0;
-                let computerScore = 0;
-                let roundStatus;                       
+            function showRoundResults(roundStatus) {
 
-                while (playerScore < 5 && computerScore < 5) {
-                    
-                    let computerSelection = computerPlay();            
-                    roundStatus = playRound(playerSelection, computerSelection);
-
-                    if (roundStatus === "w") {
-                        playerScore++;
+                if (roundStatus === "w") {
+                    playerScore++;
+                    if (playerScore === 1 && computerScore === 0) {
+                        roundResults.textContent = "You won this round: " + playerSelection + 
+                                " beats " + computerSelection + "!\n";
+                        container.appendChild(roundResults);
+                    } else {
                         roundResults.append("You won this round: " + playerSelection + 
                                 " beats " + computerSelection + "!\n");
-                    } else if (roundStatus === "l") {
-                        computerScore++;
+                    }
+                } else if (roundStatus === "l") {
+                    computerScore++;
+                    if (playerScore === 0 && computerScore === 1) {
+                        roundResults.textContent = "You lost this round: " + computerSelection +
+                                " beats " + playerSelection + "!\n";
+                        container.appendChild(roundResults);
+                    } else {
                         roundResults.append("You lost this round: " + computerSelection +
                                 " beats " + playerSelection + "!\n");
-                    } else if (roundStatus === "t") {
+                    }
+                } else if (roundStatus === "t") {
+                    if (playerScore === 0 && computerScore === 0) {
+                        roundResults.textContent = "You tied this round: " + playerSelection +
+                                " and " + computerSelection + " are equal!\n";
+                        container.appendChild(roundResults);
+                    } else {
                         roundResults.append("You tied this round: " + playerSelection +
                                 " and " + computerSelection + " are equal!\n");
                     }
-                    
-                    console.log(playerScore);
-                    console.log(computerScore);
-                    
-                    roundResults.append("Current score: Player " + playerScore + ", Computer " +
-                            computerScore + "!\n");
                 }
+
+                roundResults.append("Current score: Player " + playerScore + ", Computer " +
+                        computerScore + "!\n");
                 container.appendChild(roundResults);
-
-                finalScore.textContent = "Final score: Player " + playerScore + ", Computer " +
-                            computerScore + "!\n";
-                container.appendChild(finalScore);
-
-                if (playerScore > computerScore) {
-                    finalResult.textContent = "You won!";
-                } else if (computerScore > playerScore) {
-                    finalResult.textContent = "You lost!";
-                } else {
-                    finalResult.textContent = "It\'s a tie!";
+                    
+                if (playerScore === 5 || computerScore === 5) {
+                    endGame(playerScore, computerScore)
                 }
+            }
+                
+            function endGame(playerScore, computerScore) {
+                finalResult.append("Final score: Player " + playerScore + ", Computer " +
+                        computerScore + "!\n");
+                container.appendChild(finalScore);
+                
+                if (playerScore > computerScore) {
+                    finalResult.append("You won!\n");
+                } else if (computerScore > playerScore) {
+                    finalResult.append("You lost!\n");
+                } else {
+                    finalResult.append("It\'s a tie!\n");
+                }
+                
+                finalResult.append("Resetting for next game:\n\n\n")
+                
+                return "reset";
+
                 container.appendChild(finalResult);
             }
-            </script>
+        
+        </script>
     </body>
 </html>
