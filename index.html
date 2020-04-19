@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset ="UTF-8">
         <title>Rock Paper Scissors</title>
         <style>
             div {
-                white-space: pre;
+                white-space: pre;   /* to force newlines */
             }
         </style>
     </head>
@@ -18,8 +19,6 @@
         <script>
             const roundResults = document.createElement('div');
             roundResults.classList.add('roundResults');
-            const finalScore = document.createElement('div');
-            finalScore.classList.add('finalScore');
             const finalResult = document.createElement('div');
             finalResult.classList.add('finalResult');
 
@@ -30,26 +29,31 @@
             let computerSelection;
             let playerScore = 0;
             let computerScore = 0;
+            let isGameAtStart = "yes";
 
             rock.addEventListener('click', () => {
+                finalResult.textContent = "";
                 playerSelection = "rock";
                 computerSelection = computerPlay();
                 roundStatus = playRound(playerSelection, computerSelection);
                 showRoundResults(roundStatus);
             });
             paper.addEventListener('click', () => {
+                finalResult.textContent = "";
                 playerSelection = "paper";
                 computerSelection = computerPlay();
                 roundStatus = playRound(playerSelection, computerSelection);
                 showRoundResults(roundStatus);
             });
             scissors.addEventListener('click', () => {
+                finalResult.textContent = "";
                 playerSelection = "scissors";
                 computerSelection = computerPlay();
                 roundStatus = playRound(playerSelection, computerSelection);
                 showRoundResults(roundStatus);
             });
 
+            // selects computer's move for each round
             function computerPlay() {
                 let computerSelection = "rock";
                 num = Math.floor(Math.random() * 3)
@@ -61,6 +65,7 @@
                 return computerSelection;
             }
 
+            // determines winner/tie for each round
             function playRound(playerSelection, computerSelection) {
 	            playerSelection = playerSelection.toLowerCase();
                 if (playerSelection === computerSelection) {
@@ -79,34 +84,38 @@
                     return "l";
                 }
             }
-            
+
+            // displays results and scores for each round
             function showRoundResults(roundStatus) {
 
                 if (roundStatus === "w") {
                     playerScore++;
-                    if (playerScore === 1 && computerScore === 0) {
+                    if (isGameAtStart === "yes") {
                         roundResults.textContent = "You won this round: " + playerSelection + 
                                 " beats " + computerSelection + "!\n";
                         container.appendChild(roundResults);
+                        isGameAtStart = "no";
                     } else {
                         roundResults.append("You won this round: " + playerSelection + 
                                 " beats " + computerSelection + "!\n");
                     }
                 } else if (roundStatus === "l") {
                     computerScore++;
-                    if (playerScore === 0 && computerScore === 1) {
+                    if (isGameAtStart === "yes") {
                         roundResults.textContent = "You lost this round: " + computerSelection +
                                 " beats " + playerSelection + "!\n";
                         container.appendChild(roundResults);
+                        isGameAtStart = "no";
                     } else {
                         roundResults.append("You lost this round: " + computerSelection +
                                 " beats " + playerSelection + "!\n");
                     }
                 } else if (roundStatus === "t") {
-                    if (playerScore === 0 && computerScore === 0) {
+                    if (isGameAtStart === "yes") {
                         roundResults.textContent = "You tied this round: " + playerSelection +
                                 " and " + computerSelection + " are equal!\n";
                         container.appendChild(roundResults);
+                        isGameAtStart = "no";
                     } else {
                         roundResults.append("You tied this round: " + playerSelection +
                                 " and " + computerSelection + " are equal!\n");
@@ -116,16 +125,19 @@
                 roundResults.append("Current score: Player " + playerScore + ", Computer " +
                         computerScore + "!\n");
                 container.appendChild(roundResults);
-                    
+     
                 if (playerScore === 5 || computerScore === 5) {
-                    endGame(playerScore, computerScore)
+                    console.log("END");
+                    endGame(playerScore, computerScore);
+                    playerScore = 0;
+                    computerScore = 0;
                 }
             }
                 
+            // displays end of game info and prepares for new game    
             function endGame(playerScore, computerScore) {
-                finalResult.append("Final score: Player " + playerScore + ", Computer " +
-                        computerScore + "!\n");
-                container.appendChild(finalScore);
+                finalResult.textContent = "Final score: Player " + playerScore + ", Computer " +
+                        computerScore + "!\n";
                 
                 if (playerScore > computerScore) {
                     finalResult.append("You won!\n");
@@ -135,11 +147,10 @@
                     finalResult.append("It\'s a tie!\n");
                 }
                 
-                finalResult.append("Resetting for next game:\n\n\n")
-                
-                return "reset";
+                finalResult.append("Click any button to start a new game!");
 
                 container.appendChild(finalResult);
+                isGameAtStart = "yes";
             }
         
         </script>
