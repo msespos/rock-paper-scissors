@@ -29,7 +29,7 @@
             let computerSelection;
             let playerScore = 0;
             let computerScore = 0;
-            let isGameAtStart = "yes";
+            let isGameAtStart = true;
 
             rock.addEventListener('click', () => {
                 finalResult.textContent = "";
@@ -90,34 +90,34 @@
 
                 if (roundStatus === "w") {
                     playerScore++;
-                    if (isGameAtStart === "yes") {
-                        roundResults.textContent = "You won this round: " + playerSelection + 
+                    if (isGameAtStart === true) {
+                        roundResults.textContent = "\nYou won this round: " + playerSelection + 
                                 " beats " + computerSelection + "!\n";
                         container.appendChild(roundResults);
-                        isGameAtStart = "no";
+                        isGameAtStart = false;
                     } else {
-                        roundResults.append("You won this round: " + playerSelection + 
+                        roundResults.append("\nYou won this round: " + playerSelection + 
                                 " beats " + computerSelection + "!\n");
                     }
                 } else if (roundStatus === "l") {
                     computerScore++;
-                    if (isGameAtStart === "yes") {
-                        roundResults.textContent = "You lost this round: " + computerSelection +
+                    if (isGameAtStart === true) {
+                        roundResults.textContent = "\nYou lost this round: " + computerSelection +
                                 " beats " + playerSelection + "!\n";
                         container.appendChild(roundResults);
-                        isGameAtStart = "no";
+                        isGameAtStart = false;
                     } else {
-                        roundResults.append("You lost this round: " + computerSelection +
+                        roundResults.append("\nYou lost this round: " + computerSelection +
                                 " beats " + playerSelection + "!\n");
                     }
                 } else if (roundStatus === "t") {
-                    if (isGameAtStart === "yes") {
-                        roundResults.textContent = "You tied this round: " + playerSelection +
+                    if (isGameAtStart === true) {
+                        roundResults.textContent = "\nYou tied this round: " + playerSelection +
                                 " and " + computerSelection + " are equal!\n";
                         container.appendChild(roundResults);
-                        isGameAtStart = "no";
+                        isGameAtStart = false;
                     } else {
-                        roundResults.append("You tied this round: " + playerSelection +
+                        roundResults.append("\nYou tied this round: " + playerSelection +
                                 " and " + computerSelection + " are equal!\n");
                     }
                 }
@@ -136,13 +136,13 @@
                 
             // displays end of game info and prepares for new game    
             function endGame(playerScore, computerScore) {
-                finalResult.textContent = "Final score: Player " + playerScore + ", Computer " +
+                finalResult.textContent = "\n\nFinal score: Player " + playerScore + ", Computer " +
                         computerScore + "!\n";
                 
                 if (playerScore > computerScore) {
-                    finalResult.append("You won!\n");
+                    finalResult.append("You won the game!\n");
                 } else if (computerScore > playerScore) {
-                    finalResult.append("You lost!\n");
+                    finalResult.append("You lost the game!\n");
                 } else {
                     finalResult.append("It\'s a tie!\n");
                 }
@@ -150,7 +150,7 @@
                 finalResult.append("Click any button to start a new game!");
 
                 container.appendChild(finalResult);
-                isGameAtStart = "yes";
+                isGameAtStart = true;
             }
         
         </script>
